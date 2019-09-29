@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Layout, Menu, Comment, ToolTip, Avatar, Button } from "antd";
 import axios from "axios";
 import moment from "moment";
-const { Header, Footer, Content } = Layout;
+const { Header, Footer } = Layout;
 
 function ChatWindow (props) {
   const [messageData, setMessageData] = useState([]);
@@ -26,8 +26,7 @@ function ChatWindow (props) {
   }, [props.lang])
 
     return (
-      <div>
-        <Content className="content">
+      <>
           {messageData.map(message => (
             <Comment
               author={<a>Anonymous</a>}
@@ -44,8 +43,7 @@ function ChatWindow (props) {
           <Button type="primary" onClick={refreshChat}>
             Refresh Chat!
           </Button>
-        </Content>
-      </div>
+      </>
     );
 }
 

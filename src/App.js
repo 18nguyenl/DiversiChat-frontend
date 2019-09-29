@@ -1,45 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "antd/dist/antd.css";
 import "./App.css";
 import ChatWindow from "./Components/chat-window";
 import {
   Layout,
   Menu,
-  Comment,
-  ToolTip,
-  Avatar,
-  Button,
   Dropdown,
-  Icon
+  Icon,
+  PageHeader
 } from "antd";
 
 const { Header, Footer, Content } = Layout;
 
-function DropdownMenu({ setLang, lang }) {
+function DropdownMenu({ setLang }) {
   return (
-    <Menu>
+    <Menu className="menu" theme="light">
       <Menu.Item>
-        <a onClick={() => {setLang("es"); console.log(lang)}} rel="noopener noreferrer" href="#">
+        <a onClick={() => {setLang("es")}} rel="noopener noreferrer">
           Spanish
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a onClick={() => {setLang("en")}} rel="noopener noreferrer" href="#">
+        <a onClick={() => {setLang("en")}} rel="noopener noreferrer">
           English
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a onClick={() => setLang("ja")} rel="noopener noreferrer" href="#">
+        <a onClick={() => setLang("ja")} rel="noopener noreferrer">
           Japanese
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a onClick={() => setLang("hi")} rel="noopener noreferrer" href="#">
+        <a onClick={() => setLang("hi")} rel="noopener noreferrer">
           Hindi
         </a>
       </Menu.Item>
       <Menu.Item>
-        <a onClick={() => setLang("zh")} rel="noopener noreferrer" href="#">
+        <a onClick={() => setLang("zh")} rel="noopener noreferrer">
           Chinese
         </a>
       </Menu.Item>
@@ -51,26 +48,21 @@ function App() {
   const [lang, setLang] = useState("en");
 
   return (
-    <Layout className="layout">
-      <Header>
-        <h1
-          style={{
-            color: "white",
-            display: "inline-block",
-            marginRight: "2rem"
-          }}
-        >
-          DiversiChat
-        </h1>
-        <Dropdown overlay={<DropdownMenu setLang={setLang} lang={lang}/>}>
+    <>
+    <PageHeader title="DiversiChat" extra={
+    <Dropdown overlay={<DropdownMenu setLang={setLang} lang={lang}/>}>
           <a className="ant-dropdown-link" href="#">
             Choose Language <Icon type="down" />
           </a>
-        </Dropdown>
-      </Header>
-      <ChatWindow setLang={setLang} lang={lang} />
+        </Dropdown>}>
+    </PageHeader>
+    <Layout className="layout">
+      <Content className="content">
+        <ChatWindow setLang={setLang} lang={lang} />
+      </Content>
       <Footer className="footer" style={{textAlign: "center"}}>&copy; 2019 | made by Long Nguyen, Eric Nwagwu, and Jeremia Gusti</Footer>
     </Layout>
+    </>
   );
 }
 
