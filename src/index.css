@@ -1,3 +1,7 @@
+html, body {
+  height: 100% !important;
+}
+
 .logo {
   width: 120px;
   height: 31px;
@@ -6,17 +10,18 @@
   float: left;
 }
 
+.layout {
+  min-height: 100vh !important;
+}
+
 .content {
   padding: 3rem;
+
+  flex: 1 0 auto !important;
 }
 
-.card {
-  width: auto;
-  max-width: 35vw;
-  border-radius: 2rem !important;
-  margin-bottom: 1rem !important;
-}
+.footer {
+  margin-top: auto;
 
-.card > * {
-  display: inline-block;
+  flex-shrink: 0 !important;
 }

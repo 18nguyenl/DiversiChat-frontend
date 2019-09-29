@@ -69,7 +69,7 @@ function App() {
         </Dropdown>
       </Header>
       <ChatWindow setLang={setLang} lang={lang} />
-      <Footer></Footer>
+      <Footer className="footer" style={{textAlign: "center"}}>&copy; 2019 | made by Long Nguyen, Eric Nwagwu, and Jeremia Gusti</Footer>
     </Layout>
   );
 }
