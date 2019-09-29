@@ -14,7 +14,7 @@ class Translator extends Component {
 
   componentDidMount() {
     axios
-      .get(`http://37950813.ngrok.io/messages`)
+      .get(`https://diversichat-api.herokuapp.com/messages`)
       .then(res => {
         this.setState({ messages: res.data });
         console.log(res.data);

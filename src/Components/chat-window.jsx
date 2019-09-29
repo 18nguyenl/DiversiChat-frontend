@@ -1,76 +1,52 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Menu, Comment, ToolTip, Avatar, Button } from "antd";
 import axios from "axios";
 import moment from "moment";
 const { Header, Footer, Content } = Layout;
 
-class ChatWindow extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      messageData: [],
-      preferredLanguage: "en"
-    };
-    this.formatDate = this.formatDate.bind(this);
-    this.refreshChat = this.refreshChat.bind(this);
-  }
+function ChatWindow (props) {
+  const [messageData, setMessageData] = useState([]);
 
-  componentDidMount() {
-    axios
-      .get(`http://37950813.ngrok.io/messages-${this.state.preferredLanguage}`)
-      .then(res => {
-        this.setState({ messageData: res.data });
-        console.log(res.data);
-      })
-      .catch(console.log);
-  }
-
-  componentDidUpdate() {
-    if (this.props.lang !== this.state.preferredLanguage) {
-      this.setState({
-        preferredLanguage: this.props.lang
-      });
-    }
-  }
-  formatDate(date) {
+  function formatDate(date) {
     date = parseInt(date);
     return moment.unix(date).format("LLL");
   }
 
-  refreshChat() {
+  function refreshChat() {
     axios
-      .get(`http://37950813.ngrok.io/messages-${this.state.preferredLanguage}`)
-      .then(res => {
-        this.setState({ messageData: res.data });
-        console.log(res.data);
-      })
-      .catch(console.log);
+        .get(`https://diversichat-api.herokuapp.com/messages-${props.lang}`)
+        .then(res => {
+          setMessageData(res.data);
+        })
+        .catch(console.log); 
   }
 
-  render() {
+  useEffect(() => {
+    refreshChat()
+  }, [props.lang])
+
     return (
       <div>
         <Content className="content">
-          {this.state.messageData.map(message => (
+          {messageData.map(message => (
             <Comment
               author={<a>Anonymous</a>}
               avatar={
                 <Avatar
-                  src={`https://api.adorable.io/avatars/500/${message.message}`}
+                  src={`https://api.adorable.io/avatars/500/${message.userid}`}
                   alt="Han Solo"
                 />
               }
               content={<p>{message.message}</p>}
-              datetime={this.formatDate(message.date)}
+              datetime={formatDate(message.date)}
             />
           ))}
-          <Button type="primary" onClick={this.refreshChat}>
+          <Button type="primary" onClick={refreshChat}>
             Refresh Chat!
           </Button>
         </Content>
       </div>
     );
-  }
 }
 
 export default ChatWindow;

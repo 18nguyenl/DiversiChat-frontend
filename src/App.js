@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "antd/dist/antd.css";
 import "./App.css";
 import ChatWindow from "./Components/chat-window";
@@ -14,42 +14,42 @@ import {
 } from "antd";
 
 const { Header, Footer, Content } = Layout;
-let userLang = "en";
-function setLang(lang) {
-  userLang = lang;
+
+function DropdownMenu({ setLang, lang }) {
+  return (
+    <Menu>
+      <Menu.Item>
+        <a onClick={() => {setLang("es"); console.log(lang)}} rel="noopener noreferrer" href="#">
+          Spanish
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a onClick={() => {setLang("en")}} rel="noopener noreferrer" href="#">
+          English
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a onClick={() => setLang("ja")} rel="noopener noreferrer" href="#">
+          Japanese
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a onClick={() => setLang("hi")} rel="noopener noreferrer" href="#">
+          Hindi
+        </a>
+      </Menu.Item>
+      <Menu.Item>
+        <a onClick={() => setLang("zh")} rel="noopener noreferrer" href="#">
+          Chinese
+        </a>
+      </Menu.Item>
+    </Menu>
+  );
 }
 
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <a onClick={setLang("es")} rel="noopener noreferrer" href="#">
-        Spanish
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a onClick={setLang("en")} rel="noopener noreferrer" href="#">
-        English
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a onClick={setLang("ja")} rel="noopener noreferrer" href="#">
-        Japanese
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a onClick={setLang("hi")} rel="noopener noreferrer" href="#">
-        Hindi
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a onClick={setLang("zh")} rel="noopener noreferrer" href="#">
-        Chinese
-      </a>
-    </Menu.Item>
-  </Menu>
-);
-
 function App() {
+  const [lang, setLang] = useState("en");
+
   return (
     <Layout className="layout">
       <Header>
@@ -62,13 +62,13 @@ function App() {
         >
           DiversiChat
         </h1>
-        <Dropdown overlay={menu}>
+        <Dropdown overlay={<DropdownMenu setLang={setLang} lang={lang}/>}>
           <a className="ant-dropdown-link" href="#">
             Choose Language <Icon type="down" />
           </a>
         </Dropdown>
       </Header>
-      <ChatWindow lang={userLang} />
+      <ChatWindow setLang={setLang} lang={lang} />
       <Footer></Footer>
     </Layout>
   );
